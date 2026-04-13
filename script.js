@@ -2,6 +2,7 @@
 let humanScore = 0;
 let computerScore = 0;
 let tied = 0;
+let count = 1;
 // code for cpu guessing
 function getComputerChoice() {
   let computerChoice = Math.floor(Math.random() * 3);
@@ -90,80 +91,34 @@ function printTheResult(humanChoice, computerChoice) {
   explain(result, humanChoice, computerChoice);
 }
 
-// code for 1st round
-function playRoundOne() {
-  console.log("round 1");
+// code for play the Game
+function playTheGame() {
+  console.log(`Round ${count}`);
   let humanChoice = getHumanChoice().toLowerCase();
   let computerChoice = getComputerChoice();
   let validOrNot = checkHumanChoice(humanChoice);
   if (validOrNot == "valid") {
     printTheResult(humanChoice, computerChoice);
+    count++;
   } else {
-    playRoundOne();
-  }
-}
-
-// code for 2nd round
-function playRoundTwo() {
-  console.log("round 2");
-  let humanChoice = getHumanChoice().toLowerCase();
-  let computerChoice = getComputerChoice();
-  let validOrNot = checkHumanChoice(humanChoice);
-  if (validOrNot === "valid") {
-    printTheResult(humanChoice, computerChoice);
-  } else {
-    playRoundTwo();
-  }
-}
-
-// code for 3rd round
-function playRoundThree() {
-  console.log("round 3");
-  let humanChoice = getHumanChoice().toLowerCase();
-  let computerChoice = getComputerChoice();
-  let validOrNot = checkHumanChoice(humanChoice);
-  if (validOrNot == "valid") {
-    printTheResult(humanChoice, computerChoice);
-  } else {
-    playRoundThree();
-  }
-}
-
-// code for 4th round
-
-function playRoundFour() {
-  console.log("round 4");
-  let humanChoice = getHumanChoice().toLowerCase();
-  let computerChoice = getComputerChoice();
-  let validOrNot = checkHumanChoice(humanChoice);
-  if (validOrNot == "valid") {
-    printTheResult(humanChoice, computerChoice);
-  } else {
-    playRoundFour();
-  }
-}
-
-// code for 5th round
-
-function playRoundFive() {
-  console.log("round 5");
-  let humanChoice = getHumanChoice().toLowerCase();
-  let computerChoice = getComputerChoice();
-  let validOrNot = checkHumanChoice(humanChoice);
-  if (validOrNot == "valid") {
-    printTheResult(humanChoice, computerChoice);
-  } else {
-    playRoundFive();
+    playTheGame();
   }
 }
 
 // printing the result
-playRoundOne();
-playRoundTwo();
-playRoundThree();
-playRoundFour();
-playRoundFive();
-console.log("result");
+playTheGame();
+playTheGame();
+playTheGame();
+playTheGame();
+playTheGame();
+if (humanScore > computerScore) {
+  console.log("result : ********** YOU WIN **********");
+} else if (humanScore === computerScore) {
+  console.log("result : ********** MATCH TIED **********");
+} else {
+  console.log("result : ********** YOU LOSE **********");
+}
+
 console.log("Your Score : ", humanScore);
 console.log("Computer Score : ", computerScore);
 console.log("tied mathes : ", tied);
