@@ -2,7 +2,8 @@
 let humanScore = 0;
 let computerScore = 0;
 let tied = 0;
-let count = 1;
+let count = 2;
+
 // code for cpu guessing
 function getComputerChoice() {
   let computerChoice = Math.floor(Math.random() * 3);
@@ -13,12 +14,6 @@ function getComputerChoice() {
   } else {
     return "scissor";
   }
-}
-
-// code for human input
-function getHumanChoice() {
-  let humanChoice = prompt("Enter the choice :");
-  return humanChoice;
 }
 
 // main game logic
@@ -49,10 +44,13 @@ function playRound(humanChoice, computerChoice) {
 // calculating score
 function matchScore(result) {
   if (result === "w") {
+    alert("Yay! you won");
     humanScore += 1;
   } else if (result === "l") {
+    alert("oops! you lose");
     computerScore += 1;
-  } else {
+  } else if (result === "t") {
+    alert("it's a tie !");
     tied += 1;
   }
 }
@@ -68,57 +66,46 @@ function explain(result, humanChoice, computerChoice) {
   }
 }
 
-// check human input and convert it into lower case
-function checkHumanChoice(humanChoice) {
-  if (
-    humanChoice === "rock" ||
-    humanChoice === "paper" ||
-    humanChoice === "scissor"
-  ) {
-    return "valid";
-  } else {
-    alert("enter valid option! PLAY AGAIN");
-    return "notValid";
-  }
-}
-
 // print the result
 function printTheResult(humanChoice, computerChoice) {
-  let result = playRound(humanChoice, computerChoice);
-  matchScore(result);
   console.log("human choice : ", humanChoice);
   console.log("computer choice : ", computerChoice);
-  explain(result, humanChoice, computerChoice);
 }
 
 // code for play the Game
 function playTheGame() {
-  console.log(`Round ${count}`);
-  let humanChoice = getHumanChoice().toLowerCase();
-  let computerChoice = getComputerChoice();
-  let validOrNot = checkHumanChoice(humanChoice);
-  if (validOrNot == "valid") {
-    printTheResult(humanChoice, computerChoice);
-    count++;
-  } else {
-    playTheGame();
-  }
+  const button = document.querySelectorAll(".choice");
+  button.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+      if (count > 6) {
+        alert("GAME OVER");
+        return;
+      } else if (count === 6) {
+        if (humanScore > computerScore) {
+          document.querySelector("#finalResult").textContent =
+            `yay! you won the game`;
+        } else {
+          document.querySelector("#finalResult").textContent =
+            `oops! better luck next time`;
+        }
+      }
+      document.querySelector("#round").textContent = `Round ${count}`;
+      let humanChoice = e.target.id;
+      let computerChoice = getComputerChoice();
+
+      let result = playRound(humanChoice, computerChoice);
+      matchScore(result);
+      printTheResult(humanChoice, computerChoice);
+      explain(result, humanChoice, computerChoice);
+      document.querySelector("#humanResult").textContent =
+        `Your Score : ${humanScore}`;
+      document.querySelector("#computerResult").textContent =
+        `Computer Score : ${computerScore}`;
+      count++;
+    }),
+  );
 }
 
 // printing the result
 playTheGame();
-playTheGame();
-playTheGame();
-playTheGame();
-playTheGame();
-if (humanScore > computerScore) {
-  console.log("result : ********** YOU WIN **********");
-} else if (humanScore === computerScore) {
-  console.log("result : ********** MATCH TIED **********");
-} else {
-  console.log("result : ********** YOU LOSE **********");
-}
-
-console.log("Your Score : ", humanScore);
-console.log("Computer Score : ", computerScore);
-console.log("tied mathes : ", tied);
+matchScore();
